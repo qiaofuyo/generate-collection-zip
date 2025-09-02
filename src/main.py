@@ -1,5 +1,4 @@
 import sys
-print(sys.executable)
 import pyzipper
 import os
 import subprocess
@@ -110,12 +109,12 @@ def test_zip_integrity(folder_path, password="123456"):
 
     return True  # 所有检查通过，返回 True
 
-def compress_videos(source_folder, base_name, max_zip_size=1.8*1024**3, max_zip_count=50, max_new_add_zip_count=20, password="123456", comment="123456"):
+def compress_videos(source_folder, base_name, zip_count=1, max_zip_size=1.8*1024**3, max_zip_count=50, max_new_add_zip_count=20, password="123456", comment="123456"):
     # 获取所有 mp4 文件并按修改时间排序（从远到近）
     video_files = [f for f in os.listdir(source_folder) if f.endswith(".mp4")]
     video_files.sort(key=lambda f: os.path.getmtime(os.path.join(source_folder, f)), reverse=False)  # 按修改时间从远到近排序
     
-    zip_count = 1  # 现有 zip 数量
+    zip_count = zip_count  # 现有 zip 数量
     new_add_zip_count = 0  # 允许新增的 zip 数量
     current_zip_size = 0  # 当前 zip 包大小
     # zip_name = os.path.join(source_folder, f"收藏{zip_count}.zip")
@@ -181,7 +180,7 @@ def compress_videos(source_folder, base_name, max_zip_size=1.8*1024**3, max_zip_
 current_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本的绝对路径
 source_folder = os.path.join(current_dir, '../../', '收藏')  # 构建相对路径
 source_folder = os.path.abspath(source_folder)  # 转换为绝对路径
-compress_videos(source_folder, base_name="收藏")
+compress_videos(source_folder, base_name="收藏", zip_count=155)
 
 # 测试参数
 # source_folder = os.path.join(current_dir, '..', 'tests', 'videos')
